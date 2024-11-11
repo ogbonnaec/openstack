@@ -1,0 +1,13 @@
+- name: Creating a marc-net network
+  os_network:
+    state: present
+    name: marc-net
+    external: false
+    verify: false
+
+- name: Creating a subnet
+  os_subnet:
+    state: present
+    network_name: marc-net
+    name: marc-subnet
+    cidr: 192.168.20.0/24

@@ -1,0 +1,9 @@
+---
+- name: Creating a router
+  os_router:
+    name: marcrtr
+    state: present
+    network: public
+    enable_snat: yes
+    interfaces:
+      - marc-subnet

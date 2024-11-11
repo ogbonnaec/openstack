@@ -1,0 +1,22 @@
+---
+- name: Create marc-sec security group
+  os_security_group:
+    state: present
+    name: marc-sec
+    description: allow remote access
+
+- name: Create a rule to allow SSH connections
+  os_security_group_rule:
+    security_group: marc-sec
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+
+- name: Create a rule to allow http connections
+  os_security_group_rule:
+    security_group: marc-sec
+    protocol: tcp
+    port_range_min: 8080
+    port_range_max: 8080
+    remote_ip_prefix: 0.0.0.0/0

@@ -1,0 +1,6 @@
+---
+- name: setting up docker dependencies,installing docker and nginx
+  hosts: all
+  become: yes
+  roles:
+    - docker-nginx

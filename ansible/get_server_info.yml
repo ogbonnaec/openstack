@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  vars:
+    num: 2
+  tasks:
+  - name: get server info
+    os_server_info:
+      server: web*
+      filters:
+        vm_state: active
+    register: result
+
+  - debug:
+      msg: "{{ result.openstack_servers[0].accessIPv4 }}"
+    #with_sequence:
+     # count= {{ num }}

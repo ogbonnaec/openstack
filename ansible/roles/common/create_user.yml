@@ -1,0 +1,13 @@
+---
+- name: Creating a user eby
+  user:  
+    name: nedum
+    password: nudem1
+    groups: sudo           # assigns user to group
+    append: yes            # append user to secondary group
+    state: present         # defaults to present that the group should exist
+    shell: /bin/bash       # defaults to /bin/bash
+    system: no             # defaults to no
+    createhome: yes        # defaults to yes
+    home: /home/nedum        # defaults to /home/user
+

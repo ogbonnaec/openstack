@@ -1,0 +1,25 @@
+---
+- name: Creating an instance
+  os_server:
+    state: present
+    name: "{{ server_name }}{{ item }}"
+    image: ubuntu-20.04
+    flavor: blc.8-32-tiny
+    key_name: marc-key-pair
+    nics:
+      - net-name: shared
+      - net-name: marc-net
+    auto_ip: no
+    security_groups:
+      - marc-sec
+      - ipmi
+      - default
+    verify: false
+  register: result
+  with_sequence:
+    count={{ num }}
+
+- debug:
+    msg: "{{ result.openstack_servers[ {{ item }} ].private_v4 }}"
+  with_sequence:
+      count={{ num }}

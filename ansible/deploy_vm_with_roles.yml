@@ -1,0 +1,9 @@
+---
+- name: create and deploy resource
+  hosts: localhost
+  roles:
+    - network
+    - router
+    - sec_group
+    - keys
+    - instance

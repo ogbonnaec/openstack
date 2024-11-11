@@ -1,0 +1,27 @@
+---
+- name: Setting up an deviceson with ansible on openstack
+  hosts: localhost
+  tasks:
+    - name: Creating a dns port with a static IP address
+      openstack.cloud.port:
+        state: present
+        name: eo_raid_monitor_port
+        network: haw-net
+        fixed_ips:
+          - ip_address: 192.168.40.31
+
+    - name: Creating an instance
+      os_server:
+        state: present
+        name: raid_monitor
+        image: ubuntu-20.04
+        flavor: blc.1-2
+        key_name: marc-key-pair
+        nics:
+          - net-name: shared
+          - port-name: eo_raid_monitor_port
+        auto_ip: no
+        security_groups:
+          - ssh and dns
+          - default
+          - web access and ping

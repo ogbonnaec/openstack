@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  tasks: 
+    - name: Creating a user nedum
+      user:
+        name: nedum
+        password: nedum1
+        groups: sudo           # assigns user to group
+        append: yes            # append user to secondary group
+        state: present         # defaults to present that the group should exist
+        shell: /bin/bash       # defaults to /bin/bash
+        system: no             # defaults to no
+        createhome: yes        # defaults to yes
+        home: /home/nedum        # defaults to /home/user
+     
+#    - name: Make sudoer execute sudo commands with password 
+#      lineinfile:
+#        path: /etc/sudoers
+#        state: present
+#        regexp: '^%sudo ALL=(ALL:ALL) ALL'     #finds the line with the quoted text
+#        line: '%sudo  ALL=(ALL:ALL) NOPASSWD: ALL'   #replaces the found line with this 
+#        validate: /usr/sbin/visudo -cf %s
+

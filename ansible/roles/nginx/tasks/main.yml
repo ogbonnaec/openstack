@@ -1,0 +1,49 @@
+---
+- name: installing nginx the latest version
+  apt:
+    name: nginx
+    state: latest
+
+- name: starting nginx
+  service:
+    name: nginx
+    state: started
+
+- name: Changing server_names_hash_bucket_size directive
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    state: present
+    search_string: '# server_names_hash_bucket_size 64;'
+    line: '        server_names_hash_bucket_size 64;'
+
+- name: Creating a directory if it does not exist in var/www
+  ansible.builtin.file:
+    path: "/var/www/{{domain}}.com"
+    state: directory
+    #owner: root
+    #group: root
+    recurse: yes
+    mode: '0755'
+
+- name: Copying web content
+  copy:
+    src: ./files/index.html
+    dest: "/var/www/{{domain}}.com"
+
+- name: Copying the server block config
+  copy:
+    src: "./files/{{domain}}"
+    dest: /etc/nginx/sites-available
+
+- name: Creating a s-link to enable the server block
+  file:
+    src: "/etc/nginx/sites-available/{{domain}}"
+    dest: "/etc/nginx/sites-enabled/{{domain}}"
+    state: link
+    force: yes
+
+- name: Restarting nginx
+  systemd:
+    name: nginx.service
+    state: restarted
+

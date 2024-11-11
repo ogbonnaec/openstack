@@ -1,0 +1,6 @@
+---
+- name: create and deploy VM
+  hosts: localhost
+  roles:
+    - instance
+

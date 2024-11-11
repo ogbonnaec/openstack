@@ -1,0 +1,6 @@
+- name: Creating a keypair
+  os_keypair:
+    state: present
+    name: marc-key-pair
+    public_key_file: /Users/emmanuelogbonna/.ssh/id_rsa.pub
+

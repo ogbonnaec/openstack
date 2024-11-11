@@ -1,0 +1,24 @@
+---
+- name: Setting up an deviceson with ansible on openstack
+  hosts: localhost
+  vars:
+    - snum: 3 
+  tasks:
+    - name: Creating an instance
+      os_server:
+        state: present
+        name: controller "{{item}}"
+        image: ubuntu-20.04
+        flavor: blc.2-6
+        key_name: marc-key-pair
+        nics: 
+          - net-name: shared
+          - net-name: marc-net
+        auto_ip: no
+        security_groups:
+          - default
+          - ipmi
+          - marc-sec
+        verify: false
+      with_sequence: 
+        count={{ snum }}
